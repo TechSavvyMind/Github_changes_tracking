@@ -1,7 +1,21 @@
 Rules: 
-  # host: "example.com"
-  # port: 80
-  # protocol: "http"
+  host: "example.com"
+  port: 80
+  protocol: "http"
+  endpoints:
+    - path: "/"
+      method: "GET"
+    - path: "/api"
+      method: "POST"
+  timeout: 30
+  retries: 3
+  logging:
+    level: "info"
+  #   format: "json"
+
+  # host: "example2.com"
+  # port: 8080
+  # protocol: "https"
   # endpoints:
   #   - path: "/"
   #     method: "GET"
@@ -12,17 +26,3 @@ Rules:
   # logging:
   #   level: "info"
   #   format: "json"
-
-  host: "example2.com"
-  port: 8080
-  protocol: "https"
-  endpoints:
-    - path: "/"
-      method: "GET"
-    - path: "/api"
-      method: "POST"
-  timeout: 30
-  retries: 3
-  logging:
-    level: "info"
-    format: "json"
