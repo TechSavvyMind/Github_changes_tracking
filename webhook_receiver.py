@@ -33,7 +33,9 @@ async def health():
 
 @app.post("/webhook")
 async def handle_webhook(payload: WebhookPayload):
+    logger.info("=" * 50)
     logger.info("Received webhook payload")
+    logger.info(f"Full payload: {payload.model_dump_json(indent=2)}")
     
     # Get changed files from the webhook payload
     changed_files = set()
@@ -68,7 +70,25 @@ async def handle_webhook(payload: WebhookPayload):
     conn.close()
     
     logger.info("Successfully recorded changes")
+    logger.info("=" * 50)
     return {"status": "success"}
+
+
+@app.get("/changes")
+async def get_changes():
+    """View the recorded changes history"""
+    conn = sqlite3.connect('changes.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM file_changes ORDER BY timestamp DESC LIMIT 20")
+    rows = cursor.fetchall()
+    conn.close()
+    return {
+        "total": len(rows),
+        "changes": [
+            {"timestamp": r[0], "a.yaml": r[1], "b.yaml": r[2]} 
+            for r in rows
+        ]
+    }
 
 if __name__ == '__main__':
     import uvicorn
