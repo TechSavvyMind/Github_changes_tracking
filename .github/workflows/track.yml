@@ -1,30 +1,30 @@
-name: Run Tracker
-on: [push]
+# name: Run Tracker
+# on: [push]
 
-jobs:
-  track_job:
-    runs-on: ubuntu-latest
-    # This gives the action permission to write the database file back to your repo
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 
+# jobs:
+#   track_job:
+#     runs-on: ubuntu-latest
+#     # This gives the action permission to write the database file back to your repo
+#     permissions:
+#       contents: write
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v6
+#         with:
+#           fetch-depth: 2 
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+#       - name: Set up Python
+#         uses: actions/setup-python@v6
+#         with:
+#           python-version: '3.x'
 
-      - name: Run Tracker
-        run: python tracker.py
+#       - name: Run Tracker
+#         run: python tracker.py
 
-      - name: Save Database Changes
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git add changes.db
-          git commit -m "Update log [skip ci]" || echo "No changes"
-          git push
+#       - name: Save Database Changes
+#         run: |
+#           git config --global user.name 'github-actions'
+#           git config --global user.email 'github-actions@github.com'
+#           git add changes.db
+#           git commit -m "Update log [skip ci]" || echo "No changes"
+#           git push
